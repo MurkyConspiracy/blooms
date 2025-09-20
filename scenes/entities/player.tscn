@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctiklkvey6v5p"]
+
+[ext_resource type="Script" uid="uid://cldxdwyewnavu" path="res://scenes/entities/player.gd" id="1_08t41"]
+[ext_resource type="Texture2D" uid="uid://bf8b0u66deq8r" path="res://assets/devart_player.png" id="2_1ie0h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_42nxq"]
+size = Vector2(32, 32)
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 3
+script = ExtResource("1_08t41")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_42nxq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_1ie0h")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+limit_left = 0
+limit_bottom = 25
+position_smoothing_enabled = true

@@ -1,0 +1,19 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bo667h2vovh5w"]
+
+[ext_resource type="Texture2D" uid="uid://v00pacx7tl8l" path="res://assets/devart_terrain.png" id="1_ig0kw"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ampje"]
+texture = ExtResource("1_ig0kw")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -8, -8, -8, -8, 8, 0, 8, 8, 8, 8, -8)
+1:0/0 = 0
+1:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(0, -8, -8, -8, -8, 8, 0, 8, 8, 8, 8, -8)
+2:0/0 = 0
+3:0/0 = 0
+
+[resource]
+tile_shape = 2
+physics_layer_0/collision_layer = 1
+physics_layer_1/collision_layer = 0
+physics_layer_1/collision_mask = 2
+sources/0 = SubResource("TileSetAtlasSource_ampje")
