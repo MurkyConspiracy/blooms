@@ -36,5 +36,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECEL)
-		
+	
+	#print("Vol X:%f\nVol Y:%f" %[velocity.x,velocity.y])
+	
 	move_and_slide()
