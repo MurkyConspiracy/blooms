@@ -86,12 +86,12 @@ func _physics_process(delta: float) -> void:
 	#Handle the dash movement
 	if Input.is_action_just_pressed("dash_right"):
 		velocity.y += -120
-		velocity.x += 1000
+		velocity.x += 600
 		
 		
 	if Input.is_action_just_pressed("dash_left"):
 		velocity.y += -120
-		velocity.x += -1000
+		velocity.x += -600
 	
 	move_and_slide()
 
