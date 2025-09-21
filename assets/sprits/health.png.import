@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://we3hny2w8ed4"
-path="res://.godot/imported/devart_terrain_v2.png-6e38c83278f7058e8f3ef0a1fbedd3bc.ctex"
+uid="uid://qi11xckonely"
+path="res://.godot/imported/health.png-0481e543b1222ae5abfc921492283e70.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/devart_terrain_v2.png"
-dest_files=["res://.godot/imported/devart_terrain_v2.png-6e38c83278f7058e8f3ef0a1fbedd3bc.ctex"]
+source_file="res://assets/sprits/health.png"
+dest_files=["res://.godot/imported/health.png-0481e543b1222ae5abfc921492283e70.ctex"]
 
 [params]
 

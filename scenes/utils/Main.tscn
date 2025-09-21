@@ -3,14 +3,14 @@
 [ext_resource type="Shader" uid="uid://c0dpj1fpx1mwh" path="res://assets/shaders/subpixel_shader.gdshader" id="1_i0tu0"]
 [ext_resource type="PackedScene" uid="uid://c4ei6gbhmaawg" path="res://scenes/levels/mushroom_forest.tscn" id="1_s34jj"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3o0ba"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i0tu0"]
 shader = ExtResource("1_i0tu0")
 shader_parameter/cam_offset = Vector2(0, 0)
 
 [node name="Main" type="Node2D"]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-material = SubResource("ShaderMaterial_3o0ba")
+material = SubResource("ShaderMaterial_i0tu0")
 offset_left = -2.0
 offset_top = -2.0
 offset_right = 640.0

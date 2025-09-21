@@ -1,15 +1,15 @@
 [gd_scene load_steps=6 format=3 uid="uid://ctiklkvey6v5p"]
 
 [ext_resource type="Script" uid="uid://cldxdwyewnavu" path="res://scenes/entities/player.gd" id="1_08t41"]
+[ext_resource type="Texture2D" uid="uid://bf8b0u66deq8r" path="res://assets/sprits/devart_player.png" id="2_1ie0h"]
 [ext_resource type="Texture2D" uid="uid://qi11xckonely" path="res://assets/sprits/health.png" id="2_42nxq"]
-[ext_resource type="SpriteFrames" uid="uid://dnld6vym1qdmn" path="res://assets/sprits/player_frames.tres" id="3_1ie0h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5u6hq"]
 atlas = ExtResource("2_42nxq")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_42nxq"]
-size = Vector2(27, 32)
+size = Vector2(32, 32)
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 3
@@ -37,7 +37,7 @@ offset_bottom = 101.0
 text = "FADEV"
 metadata/_edit_use_anchors_ = true
 
-[node name="velocity_dev" type="Label" parent="CanvasLayer"]
+[node name="vel_dev" type="Label" parent="CanvasLayer"]
 z_index = 2
 offset_left = 31.0
 offset_top = 113.0
@@ -85,14 +85,11 @@ size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_5u6hq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2.5, 0)
 shape = SubResource("RectangleShape2D_42nxq")
 
-[node name="CharacterModel" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("3_1ie0h")
-animation = &"walk"
-autoplay = "idle"
-frame_progress = 0.232675
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_1ie0h")
 
 [node name="Float_Timer" type="Timer" parent="."]
 one_shot = true
