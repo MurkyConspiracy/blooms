@@ -8,8 +8,10 @@ size = Vector2(32, 32)
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 3
-floor_snap_length = 15.0
 script = ExtResource("1_08t41")
+float_mod = null
+float_duration = null
+fall_duration = null
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

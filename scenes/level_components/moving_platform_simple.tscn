@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bs08ys4ojxqah"]
+
+[ext_resource type="TileSet" uid="uid://bo667h2vovh5w" path="res://fabs/terrain_tiles.tres" id="2_qbevt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pxeae"]
+size = Vector2(80, 16)
+
+[node name="PlatformBody" type="AnimatableBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_pxeae")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(8, -8)
+tile_map_data = PackedByteArray(0, 0, 253, 255, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 254, 255, 0, 0, 1, 0, 3, 0, 1, 0, 0, 0, 255, 255, 0, 0, 1, 0, 3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 3, 0, 1, 0, 0, 0)
+tile_set = ExtResource("2_qbevt")

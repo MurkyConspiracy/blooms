@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c5a4qjcacd01t"]
 
 [ext_resource type="Script" uid="uid://dyvrod0m7bot0" path="res://scenes/level_components/spikes.gd" id="1_al1tu"]
-[ext_resource type="Texture2D" uid="uid://v00pacx7tl8l" path="res://assets/devart_terrain.png" id="1_j75hw"]
+[ext_resource type="Texture2D" uid="uid://v00pacx7tl8l" path="res://assets/tilesets/devart_terrain.png" id="1_j75hw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_al1tu"]
 atlas = ExtResource("1_j75hw")
