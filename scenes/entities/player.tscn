@@ -100,5 +100,6 @@ one_shot = true
 [node name="Fall_Timer" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="Float_Timer" to="." method="_on_float_timer_timeout"]
 [connection signal="timeout" from="Fall_Timer" to="." method="_on_fall_timer_timeout"]

@@ -39,29 +39,11 @@ func _physics_process(delta: float) -> void:
 	
 	# Add the gravity and handle float.
 	if not is_on_floor():
-		if Input.is_action_pressed("float") && !float_lock:
-			if float_timer.is_stopped():
-				float_timer.start(float_duration)
-				float_timer.set_paused(false)
-			elif float_timer.paused:
-				float_timer.set_paused(false)
-			fall_timer.set_paused(true)
+		if float_timer.paused == false && !float_timer.is_stopped():
 			velocity += (get_gravity() / 2 * float_mod) * delta
-		elif Input.is_action_just_pressed("dash_right") && !right_dash_lock:
-			velocity.y += -120
-			velocity.x += 600
-			right_dash_lock = true
-		elif Input.is_action_just_pressed("dash_left") && !left_dash_lock:
-			velocity.y += -120
-			velocity.x += -600
-			left_dash_lock = true
 		else:
-			fall_timer.set_paused(false)
-			if !float_timer.is_stopped():
-				float_timer.set_paused(true)
-			if fall_timer.is_stopped() && !fall_lock:
-				fall_timer.start(fall_duration)
 			velocity += get_gravity() * delta
+		
 	else:
 		if fall_lock || velocity.y > death_velocity:
 			player_death()
@@ -79,7 +61,7 @@ func _physics_process(delta: float) -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("move_left", "move_right")
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = move_toward(velocity.x,direction * SPEED, 45)
 		character_model.play("walk")
 		if (direction > 0):
 			character_model.flip_h = true
@@ -92,6 +74,29 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, DECEL)
 	move_and_slide()
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("float") && !float_lock:
+		if float_timer.is_stopped():
+			float_timer.start(float_duration)
+			float_timer.set_paused(false)
+		elif float_timer.paused:
+			float_timer.set_paused(false)
+			fall_timer.set_paused(true)
+	elif event.is_action_pressed("dash_right") && !right_dash_lock:
+		velocity.y += -120
+		velocity.x = 1500
+		right_dash_lock = true
+	elif event.is_action_pressed("dash_left") && !left_dash_lock:
+		velocity.y += -120
+		velocity.x = -1500
+		left_dash_lock = true
+	else:
+		fall_timer.set_paused(false)
+		if !float_timer.is_stopped():
+			float_timer.set_paused(true)
+		if fall_timer.is_stopped() && !fall_lock:
+			fall_timer.start(fall_duration)
+
 func player_death():
 	print("Handle Death!")
 	get_tree().reload_current_scene()
@@ -102,3 +107,4 @@ func _on_float_timer_timeout() -> void:
 
 func _on_fall_timer_timeout() -> void:
 	fall_lock = true
+	
