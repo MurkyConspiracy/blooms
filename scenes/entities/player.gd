@@ -20,23 +20,25 @@ var fall_lock : bool = false
 @onready var fall_timer: Timer = $Fall_Timer
 @onready var fall_dev: Label = $CanvasLayer/fall_dev
 
-
 @onready var character_model: AnimatedSprite2D = $CharacterModel
 
+var left_dash_lock : bool = false
+var right_dash_lock : bool = false
 
 func _ready() -> void:
 	float_lock = false
 	fall_lock = false
+	left_dash_lock = false
+	right_dash_lock = false
 
 func _physics_process(delta: float) -> void:
 	
 	float_dev.text = ("Float Time: %f      Lock: %s" % [float_timer.time_left,float_lock])
 	fall_dev.text = ("Fall Time: %f      Lock: %s" % [fall_timer.time_left,fall_lock])
 	velocity_dev.text = ("XVel: %f      YVel: %f" % [velocity.x, velocity.y])
+	
 	# Add the gravity and handle float.
 	if not is_on_floor():
-			
-		
 		if Input.is_action_pressed("float") && !float_lock:
 			if float_timer.is_stopped():
 				float_timer.start(float_duration)
@@ -45,6 +47,14 @@ func _physics_process(delta: float) -> void:
 				float_timer.set_paused(false)
 			fall_timer.set_paused(true)
 			velocity += (get_gravity() / 2 * float_mod) * delta
+		elif Input.is_action_just_pressed("dash_right") && !right_dash_lock:
+			velocity.y += -120
+			velocity.x += 600
+			right_dash_lock = true
+		elif Input.is_action_just_pressed("dash_left") && !left_dash_lock:
+			velocity.y += -120
+			velocity.x += -600
+			left_dash_lock = true
 		else:
 			fall_timer.set_paused(false)
 			if !float_timer.is_stopped():
@@ -60,10 +70,10 @@ func _physics_process(delta: float) -> void:
 		float_lock = false
 		fall_timer.set_paused(false)
 		fall_timer.stop()
+		left_dash_lock = false
+		right_dash_lock = false
 		
-		
-		
-	
+
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -80,21 +90,7 @@ func _physics_process(delta: float) -> void:
 		character_model.play("idle")
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECEL)
-	
-	#print("Vol X:%f\nVol Y:%f" %[velocity.x,velocity.y])
-	
-	#Handle the dash movement
-	if Input.is_action_just_pressed("dash_right"):
-		velocity.y += -120
-		velocity.x += 600
-		
-		
-	if Input.is_action_just_pressed("dash_left"):
-		velocity.y += -120
-		velocity.x += -600
-	
 	move_and_slide()
-
 
 func player_death():
 	print("Handle Death!")
