@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ctiklkvey6v5p"]
+[gd_scene load_steps=5 format=3 uid="uid://ctiklkvey6v5p"]
 
 [ext_resource type="Script" uid="uid://cldxdwyewnavu" path="res://scenes/entities/player.gd" id="1_08t41"]
 [ext_resource type="Texture2D" uid="uid://qi11xckonely" path="res://assets/sprits/health.png" id="2_42nxq"]
@@ -8,11 +8,9 @@
 atlas = ExtResource("2_42nxq")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_42nxq"]
-size = Vector2(27, 32)
-
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 3
+input_pickable = true
 floor_snap_length = 15.0
 script = ExtResource("1_08t41")
 
@@ -84,9 +82,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_5u6hq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2.5, 0)
-shape = SubResource("RectangleShape2D_42nxq")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(6, 16, -6, 16, -20, -16, 14, -16)
 
 [node name="CharacterModel" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("3_1ie0h")
@@ -100,6 +97,5 @@ one_shot = true
 [node name="Fall_Timer" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="Float_Timer" to="." method="_on_float_timer_timeout"]
 [connection signal="timeout" from="Fall_Timer" to="." method="_on_fall_timer_timeout"]

@@ -23,7 +23,10 @@ var fall_lock : bool = false
 @onready var character_model: AnimatedSprite2D = $CharacterModel
 
 var left_dash_lock : bool = false
+@export var left_dash_velocity : float = 500
+
 var right_dash_lock : bool = false
+@export var right_dash_velocity : float = 500
 
 func _ready() -> void:
 	float_lock = false
@@ -32,10 +35,22 @@ func _ready() -> void:
 	right_dash_lock = false
 
 func _physics_process(delta: float) -> void:
-	
 	float_dev.text = ("Float Time: %f      Lock: %s" % [float_timer.time_left,float_lock])
 	fall_dev.text = ("Fall Time: %f      Lock: %s" % [fall_timer.time_left,fall_lock])
 	velocity_dev.text = ("XVel: %f      YVel: %f" % [velocity.x, velocity.y])
+
+		
+	var collision = move_and_collide(velocity * delta, true)
+	if collision && collision.get_angle() < deg_to_rad(15):
+		print("Touched floor: %s" % collision.get_collider())
+		if (collision.get_collider() is AnimatableBody2D && 
+			(collision.get_collider() as AnimatableBody2D).physics_material_override.resource_path == "res://scenes/level_components/bounce_platform.tres"):
+				print("BVol: %s" % velocity)
+				velocity = velocity.bounce(collision.get_normal().normalized()) * Vector2(1, (collision.get_collider() as AnimatableBody2D).physics_material_override.bounce)
+				print("Vol: %s" % velocity)
+				fall_timer.stop()
+				left_dash_lock = false
+				right_dash_lock = false
 	
 	# Add the gravity and handle float.
 	if not is_on_floor():
@@ -43,7 +58,6 @@ func _physics_process(delta: float) -> void:
 			velocity += (get_gravity() / 2 * float_mod) * delta
 		else:
 			velocity += get_gravity() * delta
-		
 	else:
 		if fall_lock || velocity.y > death_velocity:
 			player_death()
@@ -54,8 +68,6 @@ func _physics_process(delta: float) -> void:
 		fall_timer.stop()
 		left_dash_lock = false
 		right_dash_lock = false
-		
-
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -72,6 +84,9 @@ func _physics_process(delta: float) -> void:
 		character_model.play("idle")
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECEL)
+		
+
+		
 	move_and_slide()
 
 func _input(event: InputEvent) -> void:
@@ -84,11 +99,11 @@ func _input(event: InputEvent) -> void:
 			fall_timer.set_paused(true)
 	elif event.is_action_pressed("dash_right") && !right_dash_lock:
 		velocity.y += -120
-		velocity.x = 1500
+		velocity.x = right_dash_velocity
 		right_dash_lock = true
 	elif event.is_action_pressed("dash_left") && !left_dash_lock:
 		velocity.y += -120
-		velocity.x = -1500
+		velocity.x = -left_dash_velocity
 		left_dash_lock = true
 	else:
 		fall_timer.set_paused(false)
@@ -107,4 +122,3 @@ func _on_float_timer_timeout() -> void:
 
 func _on_fall_timer_timeout() -> void:
 	fall_lock = true
-	

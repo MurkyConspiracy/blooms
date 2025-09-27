@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dv26ooeguw7g4"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://dv4c08ypia3sn" path="res://scenes/level_components/bounce_platform.tres" id="1_htwyt"]
+[ext_resource type="Texture2D" uid="uid://we3hny2w8ed4" path="res://assets/tilesets/devart_terrain_v2.png" id="2_htwyt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_htwyt"]
+size = Vector2(48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g184y"]
+atlas = ExtResource("2_htwyt")
+region = Rect2(16, 96, 48, 16)
+
+[node name="BouncePlatform" type="AnimatableBody2D"]
+physics_material_override = ExtResource("1_htwyt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_htwyt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_g184y")
