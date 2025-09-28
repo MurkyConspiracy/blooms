@@ -1,15 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctiklkvey6v5p"]
+[gd_scene load_steps=8 format=3 uid="uid://ctiklkvey6v5p"]
 
 [ext_resource type="Script" uid="uid://cldxdwyewnavu" path="res://scenes/entities/player.gd" id="1_08t41"]
 [ext_resource type="Texture2D" uid="uid://qi11xckonely" path="res://assets/sprits/health.png" id="2_42nxq"]
 [ext_resource type="SpriteFrames" uid="uid://dnld6vym1qdmn" path="res://assets/sprits/player_frames.tres" id="3_1ie0h"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ie0h"]
+resource_local_to_scene = true
+atlas = ExtResource("2_42nxq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42nxq"]
+atlas = ExtResource("2_42nxq")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4qa6"]
+atlas = ExtResource("2_42nxq")
+region = Rect2(0, 0, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_5u6hq"]
+resource_local_to_scene = true
 atlas = ExtResource("2_42nxq")
 region = Rect2(0, 0, 16, 16)
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 3
+collision_mask = 7
 input_pickable = true
 floor_snap_length = 15.0
 script = ExtResource("1_08t41")
@@ -59,23 +73,24 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 84
 
 [node name="HealthUIContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
 
 [node name="HP1" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = SubResource("AtlasTexture_5u6hq")
+texture = SubResource("AtlasTexture_1ie0h")
 
 [node name="HP2" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = SubResource("AtlasTexture_5u6hq")
+texture = SubResource("AtlasTexture_42nxq")
 
 [node name="HP3" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = SubResource("AtlasTexture_5u6hq")
+texture = SubResource("AtlasTexture_d4qa6")
 
 [node name="HP4" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
 layout_mode = 2

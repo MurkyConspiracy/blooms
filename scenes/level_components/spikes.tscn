@@ -1,25 +1,53 @@
 [gd_scene load_steps=5 format=3 uid="uid://c5a4qjcacd01t"]
 
-[ext_resource type="Script" uid="uid://dyvrod0m7bot0" path="res://scenes/level_components/spikes.gd" id="1_al1tu"]
-[ext_resource type="Texture2D" uid="uid://v00pacx7tl8l" path="res://assets/tilesets/devart_terrain.png" id="1_j75hw"]
+[ext_resource type="Texture2D" uid="uid://d1l1ivstx0ygg" path="res://assets/sprits/spikes.png" id="1_j75hw"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_al1tu"]
-atlas = ExtResource("1_j75hw")
-region = Rect2(16, 0, 16.215, 16)
+[sub_resource type="GDScript" id="GDScript_al1tu"]
+script/source = "extends Node2D
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_aggje"]
-size = Vector2(16, 16)
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	get_tree().reload_current_scene()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j75hw"]
+size = Vector2(9.39879, 7.72209)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_al1tu"]
+size = Vector2(6.93949, 3.44495)
 
 [node name="Spikes" type="Node2D"]
-script = ExtResource("1_al1tu")
+script = SubResource("GDScript_al1tu")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_al1tu")
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_j75hw")
+stretch_mode = 1
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_aggje")
+position = Vector2(0, 4)
+scale = Vector2(1.70235, -1.03599)
+shape = SubResource("RectangleShape2D_j75hw")
+
+[node name="Area2D2" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(-1.19209e-07, -4)
+scale = Vector2(0.864617, -2.33779)
+shape = SubResource("RectangleShape2D_al1tu")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

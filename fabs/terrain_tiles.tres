@@ -1,8 +1,9 @@
-[gd_resource type="TileSet" load_steps=7 format=3 uid="uid://bo667h2vovh5w"]
+[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://bo667h2vovh5w"]
 
 [ext_resource type="Texture2D" uid="uid://v00pacx7tl8l" path="res://assets/tilesets/devart_terrain.png" id="1_ampje"]
 [ext_resource type="Texture2D" uid="uid://we3hny2w8ed4" path="res://assets/tilesets/devart_terrain_v2.png" id="2_axihs"]
 [ext_resource type="Texture2D" uid="uid://3ffvwya74j17" path="res://assets/tilesets/devart_background.png" id="3_axihs"]
+[ext_resource type="Texture2D" uid="uid://d1l1ivstx0ygg" path="res://assets/sprits/spikes.png" id="4_5rj5n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ampje"]
 texture = ExtResource("1_ampje")
@@ -129,10 +130,16 @@ texture = ExtResource("3_axihs")
 6:1/0 = 0
 7:1/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j31s3"]
+texture = ExtResource("4_5rj5n")
+0:0/0 = 0
+0:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-1.25901, -8, 1.72593, -8, 8, 8, -8, 8)
+
 [resource]
 physics_layer_0/collision_layer = 1
 physics_layer_1/collision_layer = 0
-physics_layer_1/collision_mask = 2
+physics_layer_1/collision_mask = 4
 sources/0 = SubResource("TileSetAtlasSource_ampje")
 sources/1 = SubResource("TileSetAtlasSource_5rj5n")
 sources/2 = SubResource("TileSetAtlasSource_8b3jj")
+sources/3 = SubResource("TileSetAtlasSource_j31s3")

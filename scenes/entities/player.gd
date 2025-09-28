@@ -29,11 +29,10 @@ var left_dash_lock : bool = false
 var right_dash_lock : bool = false
 @export var right_dash_velocity : float = 500
 
+@onready var health_ui_container: HBoxContainer = %HealthUIContainer
+
 func _ready() -> void:
-	float_lock = false
-	fall_lock = false
-	left_dash_lock = false
-	right_dash_lock = false
+	reset_conditionals()
 
 func _physics_process(delta: float) -> void:
 	float_dev.text = ("Float Time: %f      Lock: %s" % [float_timer.time_left,float_lock])
@@ -41,18 +40,19 @@ func _physics_process(delta: float) -> void:
 	velocity_dev.text = ("XVel: %f      YVel: %f" % [velocity.x, velocity.y])
 
 	var collision = move_and_collide(velocity * delta, true)
-	if collision && collision.get_angle() < deg_to_rad(15):
-		if (collision.get_collider() is AnimatableBody2D && 
-			(collision.get_collider() as AnimatableBody2D).physics_material_override.resource_path == "res://scenes/level_components/bounce_platform.tres"):
-				velocity = velocity.bounce(collision.get_normal().normalized()) * Vector2(1, (collision.get_collider() as AnimatableBody2D).physics_material_override.bounce)
-				apply_floor_snap()
-				fall_timer.stop()
-				left_dash_lock = false
-				right_dash_lock = false
-	
+
+	if collision:
+		if collision.get_angle() < deg_to_rad(15):
+			if (collision.get_collider() is AnimatableBody2D && 
+				(collision.get_collider() as AnimatableBody2D).physics_material_override.resource_path == "res://scenes/level_components/bounce_platform.tres"):
+					velocity = velocity.bounce(collision.get_normal().normalized()) * Vector2(1, (collision.get_collider() as AnimatableBody2D).physics_material_override.bounce)
+					apply_floor_snap()
+					fall_timer.stop()
+					left_dash_lock = false
+					right_dash_lock = false
+
 	# Add the gravity and handle float.
 	if not is_on_floor() && !fall_start:
-		print("1 frame")
 		fall_timer.start(fall_duration)
 		fall_start = true
 		if float_timer.paused == false && !float_timer.is_stopped():
@@ -118,7 +118,7 @@ func player_death(soft_death: bool = false):
 		print("Remaining Health: %s" % str(DataHandler.player_health))
 		reset_player()
 	else:
-		print("Actual Death")
+		DataHandler.player_health = 4
 		get_tree().reload_current_scene()
 
 func _on_float_timer_timeout() -> void:
@@ -131,10 +131,8 @@ func _on_fall_timer_timeout() -> void:
 func reset_player():
 	global_position = DataHandler.spawn_position
 	reset_conditionals()
-	print("Soft Death!")
 	
 func reset_conditionals():
-	print("Reset player conditions")
 	float_timer.set_paused(false)
 	float_timer.stop()
 	fall_start = false
@@ -143,4 +141,8 @@ func reset_conditionals():
 	fall_lock = false
 	left_dash_lock = false
 	right_dash_lock = false
-	
+	for hp : TextureRect in health_ui_container.get_children():
+		if int(hp.name.right(1)) <= DataHandler.player_health:
+			(hp.texture as AtlasTexture).region = Rect2(0,0,16,16)
+		else:
+			(hp.texture as AtlasTexture).region = Rect2(16,0,16,16)
