@@ -15,6 +15,10 @@ run/main_scene="uid://chddj5j2erx3r"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+DataHandler="*res://scenes/utils/DataHandler.tscn"
+
 [display]
 
 window/size/viewport_width=1280

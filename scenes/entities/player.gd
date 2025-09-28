@@ -16,6 +16,7 @@ var float_lock : bool = false
 
 @export var fall_duration : float = 1.5
 var fall_lock : bool = false
+var fall_start : bool = false
 
 @onready var fall_timer: Timer = $Fall_Timer
 @onready var fall_dev: Label = $CanvasLayer/fall_dev
@@ -39,35 +40,35 @@ func _physics_process(delta: float) -> void:
 	fall_dev.text = ("Fall Time: %f      Lock: %s" % [fall_timer.time_left,fall_lock])
 	velocity_dev.text = ("XVel: %f      YVel: %f" % [velocity.x, velocity.y])
 
-		
 	var collision = move_and_collide(velocity * delta, true)
 	if collision && collision.get_angle() < deg_to_rad(15):
-		print("Touched floor: %s" % collision.get_collider())
 		if (collision.get_collider() is AnimatableBody2D && 
 			(collision.get_collider() as AnimatableBody2D).physics_material_override.resource_path == "res://scenes/level_components/bounce_platform.tres"):
-				print("BVol: %s" % velocity)
 				velocity = velocity.bounce(collision.get_normal().normalized()) * Vector2(1, (collision.get_collider() as AnimatableBody2D).physics_material_override.bounce)
-				print("Vol: %s" % velocity)
+				apply_floor_snap()
 				fall_timer.stop()
 				left_dash_lock = false
 				right_dash_lock = false
 	
 	# Add the gravity and handle float.
-	if not is_on_floor():
+	if not is_on_floor() && !fall_start:
+		print("1 frame")
+		fall_timer.start(fall_duration)
+		fall_start = true
+		if float_timer.paused == false && !float_timer.is_stopped():
+			velocity += (get_gravity() / 2 * float_mod) * delta
+		else:
+			velocity += get_gravity() * delta
+	elif not is_on_floor():
 		if float_timer.paused == false && !float_timer.is_stopped():
 			velocity += (get_gravity() / 2 * float_mod) * delta
 		else:
 			velocity += get_gravity() * delta
 	else:
 		if fall_lock || velocity.y > death_velocity:
-			player_death()
-		float_timer.set_paused(false)
-		float_timer.stop()
-		float_lock = false
-		fall_timer.set_paused(false)
-		fall_timer.stop()
-		left_dash_lock = false
-		right_dash_lock = false
+			player_death(true)
+		if fall_start:
+			reset_conditionals()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -85,7 +86,6 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECEL)
 		
-
 		
 	move_and_slide()
 
@@ -97,6 +97,12 @@ func _input(event: InputEvent) -> void:
 		elif float_timer.paused:
 			float_timer.set_paused(false)
 			fall_timer.set_paused(true)
+	elif event.is_action_released("float"):
+		fall_timer.set_paused(false)
+		if !float_timer.is_stopped():
+			float_timer.set_paused(true)
+		if fall_timer.is_stopped() && !fall_lock:
+			fall_timer.start(fall_duration)
 	elif event.is_action_pressed("dash_right") && !right_dash_lock:
 		velocity.y += -120
 		velocity.x = right_dash_velocity
@@ -105,16 +111,15 @@ func _input(event: InputEvent) -> void:
 		velocity.y += -120
 		velocity.x = -left_dash_velocity
 		left_dash_lock = true
+	
+func player_death(soft_death: bool = false):
+	if soft_death && DataHandler.player_health > 0:
+		DataHandler.player_health -= 1
+		print("Remaining Health: %s" % str(DataHandler.player_health))
+		reset_player()
 	else:
-		fall_timer.set_paused(false)
-		if !float_timer.is_stopped():
-			float_timer.set_paused(true)
-		if fall_timer.is_stopped() && !fall_lock:
-			fall_timer.start(fall_duration)
-
-func player_death():
-	print("Handle Death!")
-	get_tree().reload_current_scene()
+		print("Actual Death")
+		get_tree().reload_current_scene()
 
 func _on_float_timer_timeout() -> void:
 	float_lock = true
@@ -122,3 +127,20 @@ func _on_float_timer_timeout() -> void:
 
 func _on_fall_timer_timeout() -> void:
 	fall_lock = true
+	
+func reset_player():
+	global_position = DataHandler.spawn_position
+	reset_conditionals()
+	print("Soft Death!")
+	
+func reset_conditionals():
+	print("Reset player conditions")
+	float_timer.set_paused(false)
+	float_timer.stop()
+	fall_start = false
+	fall_timer.set_paused(false)
+	fall_timer.stop()
+	fall_lock = false
+	left_dash_lock = false
+	right_dash_lock = false
+	

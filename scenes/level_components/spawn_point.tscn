@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddtj114ixgmor"]
+
+[ext_resource type="PackedScene" uid="uid://ctiklkvey6v5p" path="res://scenes/entities/player.tscn" id="1_3x6h8"]
+[ext_resource type="Script" uid="uid://bp8d5kr3ruffl" path="res://scenes/level_components/spawn_point.gd" id="1_ld5ak"]
+
+[node name="SpawnPoint" type="Node2D"]
+script = ExtResource("1_ld5ak")
+
+[node name="Player" parent="." instance=ExtResource("1_3x6h8")]

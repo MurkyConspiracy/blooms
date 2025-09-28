@@ -72,7 +72,7 @@ _data = {
 
 [node name="Camera2D" parent="." node_paths=PackedStringArray("player_ref") instance=ExtResource("4_a5jco")]
 position = Vector2(954, 371)
-player_ref = NodePath("../SpawnPoint/Player")
+player_ref = NodePath("")
 
 [node name="Tiles" type="Node" parent="."]
 
@@ -104,6 +104,4 @@ position = Vector2(1063, 430)
 
 [node name="SpawnPoint" parent="." instance=ExtResource("5_d7lei")]
 unique_name_in_owner = true
-position = Vector2(981, 377)
-
-[editable path="SpawnPoint"]
+position = Vector2(967, 376)

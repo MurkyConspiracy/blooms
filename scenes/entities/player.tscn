@@ -58,26 +58,26 @@ size_flags_vertical = 8
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 84
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+[node name="HealthUIContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+[node name="HP1" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_5u6hq")
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+[node name="HP2" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_5u6hq")
 
-[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+[node name="HP3" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_5u6hq")
 
-[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+[node name="HP4" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_5u6hq")
@@ -96,6 +96,11 @@ one_shot = true
 
 [node name="Fall_Timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, 16)
+target_position = Vector2(0, 10)
+collide_with_areas = true
 
 [connection signal="timeout" from="Float_Timer" to="." method="_on_float_timer_timeout"]
 [connection signal="timeout" from="Fall_Timer" to="." method="_on_fall_timer_timeout"]
