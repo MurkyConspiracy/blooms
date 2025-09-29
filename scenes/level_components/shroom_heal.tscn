@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://ok7nxoo0l7bf"]
+
+[ext_resource type="Script" uid="uid://bwang1t3icm8d" path="res://scenes/level_components/shroom_heal.gd" id="1_e7kod"]
+[ext_resource type="Texture2D" uid="uid://qi11xckonely" path="res://assets/sprits/health.png" id="1_l08fr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7kod"]
+atlas = ExtResource("1_l08fr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6tmg4"]
+radius = 6.0
+height = 20.0
+
+[node name="ShroomHeal" type="AnimatableBody2D"]
+script = ExtResource("1_e7kod")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2, 0)
+texture = SubResource("AtlasTexture_e7kod")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_6tmg4")
+debug_color = Color(0.609474, 0.539311, 0, 0.42)
