@@ -11,15 +11,15 @@ shader_parameter/cam_offset = Vector2(0, 0)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 material = SubResource("ShaderMaterial_i0tu0")
-offset_left = -2.0
+offset_left = 2.0
 offset_top = -2.0
-offset_right = 640.0
+offset_right = 644.0
 offset_bottom = 360.0
 scale = Vector2(2, 2)
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(640, 360)
+size = Vector2i(960, 540)
 render_target_update_mode = 4
 
 [node name="MushroomForest" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_s34jj")]

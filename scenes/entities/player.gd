@@ -33,6 +33,7 @@ var right_dash_lock : bool = false
 
 func _ready() -> void:
 	reset_conditionals()
+	DataHandler.player_reference = get_node(".")
 
 func _physics_process(delta: float) -> void:
 	float_dev.text = ("Float Time: %f      Lock: %s" % [float_timer.time_left,float_lock])
@@ -65,8 +66,10 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity += get_gravity() * delta
 	else:
+		if float_lock:
+			float_lock = false
 		if fall_lock || velocity.y > death_velocity:
-			player_death(true)
+			DataHandler.damage_player()
 		if fall_start:
 			reset_conditionals()
 
@@ -94,6 +97,7 @@ func _input(event: InputEvent) -> void:
 		if float_timer.is_stopped():
 			float_timer.start(float_duration)
 			float_timer.set_paused(false)
+			fall_timer.set_paused(true)
 		elif float_timer.paused:
 			float_timer.set_paused(false)
 			fall_timer.set_paused(true)
@@ -111,19 +115,9 @@ func _input(event: InputEvent) -> void:
 		velocity.y += -120
 		velocity.x = -left_dash_velocity
 		left_dash_lock = true
-	
-func player_death(soft_death: bool = false):
-	if soft_death && DataHandler.player_health > 0:
-		DataHandler.player_health -= 1
-		print("Remaining Health: %s" % str(DataHandler.player_health))
-		reset_player()
-	else:
-		DataHandler.player_health = 4
-		get_tree().reload_current_scene()
 
 func _on_float_timer_timeout() -> void:
 	float_lock = true
-
 
 func _on_fall_timer_timeout() -> void:
 	fall_lock = true
@@ -135,6 +129,7 @@ func reset_player():
 func reset_conditionals():
 	float_timer.set_paused(false)
 	float_timer.stop()
+	fall_lock = false
 	fall_start = false
 	fall_timer.set_paused(false)
 	fall_timer.stop()
