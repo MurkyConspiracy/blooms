@@ -10,6 +10,7 @@ func damage_player(damage_amount : int = 1, force_death : bool = false) -> bool:
 	if !player_camera:
 		player_camera = get_tree().root.find_child("PlayerCamera",true,false)
 	player_health -= damage_amount
+	player_reference.velocity = Vector2.ZERO
 	if player_health >= 0:
 		player_reference.global_position = spawn_position
 		player_camera.call("reset_camera_pos")
@@ -26,5 +27,3 @@ func damage_player(damage_amount : int = 1, force_death : bool = false) -> bool:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit_game"):
 		get_tree().quit(0)
-	
-	

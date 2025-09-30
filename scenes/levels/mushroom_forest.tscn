@@ -130,11 +130,12 @@ polygon = PackedVector2Array(150, -14, 161, -8, 160, 9, 141, 31, 122, 32, 111, 1
 
 [node name="DeathZone3" parent="Level Objects" instance=ExtResource("5_twe0d")]
 position = Vector2(892, 2211)
+collision_mask = 7
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level Objects/DeathZone3"]
-position = Vector2(-602.644, 4)
+position = Vector2(-606.00006, -1)
 scale = Vector2(1.16964, 1)
-polygon = PackedVector2Array(-1.15955, -15, 1107.73, -15, 1106.87, 1, -2.01451, 1)
+polygon = PackedVector2Array(-1.15955, -15, 1107.73, -15, 1106.87, 1, 94.22699, 0.9999695, -2.01451, 1)
 
 [node name="SpawnPoint" parent="." instance=ExtResource("5_d7lei")]
 unique_name_in_owner = true

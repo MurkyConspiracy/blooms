@@ -58,6 +58,15 @@ offset_bottom = 136.0
 text = "VDEV"
 metadata/_edit_use_anchors_ = true
 
+[node name="floor_dev" type="Label" parent="CanvasLayer"]
+z_index = 2
+offset_left = 30.0
+offset_top = 148.0
+offset_right = 80.0
+offset_bottom = 171.0
+text = "FLOOR"
+metadata/_edit_use_anchors_ = true
+
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
 texture_filter = 1
 anchors_preset = 1
