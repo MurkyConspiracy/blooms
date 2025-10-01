@@ -1,8 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://ctiklkvey6v5p"]
+[gd_scene load_steps=13 format=3 uid="uid://ctiklkvey6v5p"]
 
 [ext_resource type="Script" uid="uid://cldxdwyewnavu" path="res://scenes/entities/player.gd" id="1_08t41"]
 [ext_resource type="Texture2D" uid="uid://qi11xckonely" path="res://assets/sprits/health.png" id="2_42nxq"]
 [ext_resource type="SpriteFrames" uid="uid://dnld6vym1qdmn" path="res://assets/sprits/player_frames.tres" id="3_1ie0h"]
+[ext_resource type="AudioStream" uid="uid://c3scqx7sa6aqp" path="res://assets/sounds/move.ogg" id="4_ss7kx"]
+[ext_resource type="AudioStream" uid="uid://ds304d30ntxd5" path="res://assets/sounds/thump.ogg" id="5_dnykm"]
+[ext_resource type="AudioStream" uid="uid://b5kmrk0t3mnq7" path="res://assets/sounds/spread.ogg" id="6_c5rqy"]
+[ext_resource type="AudioStream" uid="uid://cgjv4i8gg1l5k" path="res://assets/sounds/contract.ogg" id="7_b6tgf"]
+[ext_resource type="AudioStream" uid="uid://jpuu2602eu2s" path="res://assets/sounds/boing.ogg" id="8_dnykm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1ie0h"]
 resource_local_to_scene = true
@@ -125,6 +130,28 @@ one_shot = true
 position = Vector2(0, 16)
 target_position = Vector2(0, 10)
 collide_with_areas = true
+
+[node name="MoveEffet" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_ss7kx")
+pitch_scale = 2.03
+parameters/looping = true
+
+[node name="ThumpEffect" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_dnykm")
+
+[node name="SpreadEffect" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("6_c5rqy")
+
+[node name="ContractEffect" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("7_b6tgf")
+
+[node name="BoingEffect" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("8_dnykm")
 
 [connection signal="timeout" from="Float_Timer" to="." method="_on_float_timer_timeout"]
 [connection signal="timeout" from="Fall_Timer" to="." method="_on_fall_timer_timeout"]
