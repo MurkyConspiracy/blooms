@@ -9,6 +9,7 @@ const DECEL = 15
 @onready var spread_effect: AudioStreamPlayer = %SpreadEffect
 @onready var contract_effect: AudioStreamPlayer = %ContractEffect
 @onready var boing_effect: AudioStreamPlayer = %BoingEffect
+@onready var slerp_effect: AudioStreamPlayer = %SlerpEffect
 
 
 @export var death_velocity : float = 1500
@@ -163,8 +164,14 @@ func reset_conditionals():
 	fall_lock = false
 	left_dash_lock = false
 	right_dash_lock = false
+	draw_hp()
+	
+func draw_hp() -> void:
 	for hp : TextureRect in health_ui_container.get_children():
 		if int(hp.name.right(1)) <= DataHandler.player_health:
 			(hp.texture as AtlasTexture).region = Rect2(0,0,16,16)
 		else:
 			(hp.texture as AtlasTexture).region = Rect2(16,0,16,16)
+			
+func slerp_effect_play() -> void:
+	slerp_effect.play()

@@ -23,7 +23,13 @@ func damage_player(damage_amount : int = 1, force_death : bool = false) -> bool:
 		return true
 	player_camera.call("reset_camera_pos")
 	return false
-	
+
+func heal_player(amount : int = 1):
+	player_health += amount
+	if player_health > 4:
+		player_health = 4
+	player_reference.draw_hp()
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit_game"):
 		get_tree().quit(0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://c4ei6gbhmaawg"]
+[gd_scene load_steps=11 format=4 uid="uid://c4ei6gbhmaawg"]
 
 [ext_resource type="TileSet" uid="uid://bo667h2vovh5w" path="res://fabs/terrain_tiles.tres" id="1_a84to"]
 [ext_resource type="PackedScene" uid="uid://bs08ys4ojxqah" path="res://scenes/level_components/moving_platform_simple.tscn" id="2_a5jco"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dv26ooeguw7g4" path="res://scenes/level_components/bounce_platform.tscn" id="5_872wp"]
 [ext_resource type="PackedScene" uid="uid://ddtj114ixgmor" path="res://scenes/level_components/spawn_point.tscn" id="5_d7lei"]
 [ext_resource type="PackedScene" uid="uid://bw0mr5cjwnmna" path="res://scenes/level_components/death_zone.tscn" id="5_twe0d"]
+[ext_resource type="PackedScene" uid="uid://ok7nxoo0l7bf" path="res://scenes/level_components/shroom_heal.tscn" id="7_twe0d"]
 
 [sub_resource type="Animation" id="Animation_872wp"]
 length = 0.001
@@ -140,5 +141,8 @@ polygon = PackedVector2Array(-1.15955, -15, 1107.73, -15, 1106.87, 1, 94.22699, 
 [node name="SpawnPoint" parent="." instance=ExtResource("5_d7lei")]
 unique_name_in_owner = true
 position = Vector2(981, 377)
+
+[node name="ShroomHeal" parent="." instance=ExtResource("7_twe0d")]
+position = Vector2(1423, 376)
 
 [editable path="SpawnPoint"]
