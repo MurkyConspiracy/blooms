@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://ctiklkvey6v5p"]
+[gd_scene load_steps=20 format=3 uid="uid://ctiklkvey6v5p"]
 
 [ext_resource type="Script" uid="uid://cldxdwyewnavu" path="res://scenes/entities/player.gd" id="1_08t41"]
 [ext_resource type="Texture2D" uid="uid://qi11xckonely" path="res://assets/sprits/health.png" id="2_42nxq"]
 [ext_resource type="SpriteFrames" uid="uid://dnld6vym1qdmn" path="res://assets/sprits/player_frames.tres" id="3_1ie0h"]
+[ext_resource type="Texture2D" uid="uid://0ont0lhqkyqw" path="res://assets/sprits/collectables.png" id="3_b6tgf"]
 [ext_resource type="AudioStream" uid="uid://c3scqx7sa6aqp" path="res://assets/sounds/move.ogg" id="4_ss7kx"]
 [ext_resource type="AudioStream" uid="uid://ds304d30ntxd5" path="res://assets/sounds/thump.ogg" id="5_dnykm"]
 [ext_resource type="AudioStream" uid="uid://b5kmrk0t3mnq7" path="res://assets/sounds/spread.ogg" id="6_c5rqy"]
@@ -27,6 +28,53 @@ region = Rect2(0, 0, 16, 16)
 resource_local_to_scene = true
 atlas = ExtResource("2_42nxq")
 region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_73kkf"]
+atlas = ExtResource("3_b6tgf")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6tgf"]
+atlas = ExtResource("3_b6tgf")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="Animation" id="Animation_b6tgf"]
+resource_name = "secret"
+length = 1.5
+loop_mode = 1
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Rect2(16, 0, 16, 16), Rect2(32, 0, 16, 16), Rect2(48, 0, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_73kkf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(16, 0, 16, 16)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_73kkf"]
+_data = {
+&"RESET": SubResource("Animation_73kkf"),
+&"secret": SubResource("Animation_b6tgf")
+}
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 7
@@ -73,44 +121,91 @@ offset_bottom = 171.0
 text = "FLOOR"
 metadata/_edit_use_anchors_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-texture_filter = 1
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -76.0
-offset_bottom = 16.0
+offset_left = -160.0
+offset_bottom = 40.0
 grow_horizontal = 0
 scale = Vector2(2, 2)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 84
 
-[node name="HealthUIContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+[node name="HealthUIContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="HP1" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
+[node name="HP1" type="TextureRect" parent="CanvasLayer/VBoxContainer/MarginContainer/HealthUIContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_1ie0h")
 
-[node name="HP2" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
+[node name="HP2" type="TextureRect" parent="CanvasLayer/VBoxContainer/MarginContainer/HealthUIContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_42nxq")
 
-[node name="HP3" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
+[node name="HP3" type="TextureRect" parent="CanvasLayer/VBoxContainer/MarginContainer/HealthUIContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_d4qa6")
 
-[node name="HP4" type="TextureRect" parent="CanvasLayer/MarginContainer/HealthUIContainer"]
+[node name="HP4" type="TextureRect" parent="CanvasLayer/VBoxContainer/MarginContainer/HealthUIContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_5u6hq")
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="Goldens" type="TextureRect" parent="CanvasLayer/VBoxContainer/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("AtlasTexture_73kkf")
+
+[node name="GoldenCount" type="Label" parent="CanvasLayer/VBoxContainer/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="MarginContainer3" type="MarginContainer" parent="CanvasLayer/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+
+[node name="Secrets" type="TextureRect" parent="CanvasLayer/VBoxContainer/MarginContainer3/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture = SubResource("AtlasTexture_b6tgf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/VBoxContainer/MarginContainer3/HBoxContainer/Secrets"]
+libraries = {
+&"": SubResource("AnimationLibrary_73kkf")
+}
+autoplay = "secret"
+
+[node name="SecretCount" type="Label" parent="CanvasLayer/VBoxContainer/MarginContainer3/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(6, 16, -6, 16, -20, -16, 14, -16)

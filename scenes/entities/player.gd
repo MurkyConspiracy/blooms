@@ -11,6 +11,9 @@ const DECEL = 15
 @onready var boing_effect: AudioStreamPlayer = %BoingEffect
 @onready var slerp_effect: AudioStreamPlayer = %SlerpEffect
 
+@onready var golden_count: Label = %GoldenCount
+@onready var secret_count: Label = %SecretCount
+
 
 @export var death_velocity : float = 1500
 @onready var velocity_dev: Label = $CanvasLayer/velocity_dev
@@ -173,5 +176,9 @@ func draw_hp() -> void:
 		else:
 			(hp.texture as AtlasTexture).region = Rect2(16,0,16,16)
 			
+func draw_collectables() -> void:
+	golden_count.text = str(DataHandler.goldens_collected)
+	secret_count.text = str(DataHandler.secrets_collected)
+	
 func slerp_effect_play() -> void:
 	slerp_effect.play()

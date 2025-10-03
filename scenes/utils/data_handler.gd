@@ -4,6 +4,8 @@ var player_health : int = 4
 var spawn_position : Vector2
 var player_reference : CharacterBody2D
 var player_camera : Camera2D
+var secrets_collected : int = 0
+var goldens_collected : int = 0
 
 	
 func damage_player(damage_amount : int = 1, force_death : bool = false) -> bool:
