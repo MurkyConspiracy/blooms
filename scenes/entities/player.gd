@@ -47,6 +47,7 @@ var right_dash_lock : bool = false
 
 func _ready() -> void:
 	reset_conditionals()
+	draw_collectables()
 	DataHandler.player_reference = get_node(".")
 
 func _physics_process(delta: float) -> void:
@@ -54,25 +55,14 @@ func _physics_process(delta: float) -> void:
 	fall_dev.text = ("Fall Time: %f      Lock: %s" % [fall_timer.time_left,fall_lock])
 	velocity_dev.text = ("XVel: %f      YVel: %f" % [velocity.x, velocity.y])
 	floor_dev.text = "Is On Floor: %s" % str(is_on_floor())
+	
+	
+	# Save the character's vertical velocity before the move_and_slide() call.
+	var pre_slide_velocity_y = velocity.y
+	
 	if velocity.y > 1000:
 		velocity.y = move_toward(velocity.y, 1000, 1 * (velocity.y - 1000))
 		
-	
-	var collision = move_and_collide(velocity * delta, true)
-	if collision:
-		if collision.get_angle() < deg_to_rad(5):
-			if (collision.get_collider() is AnimatableBody2D && 
-				(collision.get_collider() as AnimatableBody2D).physics_material_override.resource_path == "res://scenes/level_components/bounce_platform.tres"):
-					boing_effect.pitch_scale = lerp(0.8, 1.5, 1- clamp(abs(velocity.y) / 1000, 0, 1))
-					boing_effect.play()
-					velocity = velocity.bounce(collision.get_normal().normalized()) * Vector2(1, (collision.get_collider() as AnimatableBody2D).physics_material_override.bounce)
-					apply_floor_snap()
-					fall_timer.stop()
-					left_dash_lock = false
-					right_dash_lock = false
-			else:
-				thump_effect.play()
-
 	# Add the gravity and handle float.
 	if not is_on_floor() && !fall_start:
 		fall_timer.start(fall_duration)
@@ -113,6 +103,34 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, DECEL)
 		
 	move_and_slide()
+	
+ # Check all collisions after the move_and_slide() call
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		# This check is what correctly identifies a bounce platform
+		if collision and collision.get_collider() is AnimatableBody2D and \
+			(collision.get_collider() as AnimatableBody2D).physics_material_override.resource_path == "res://scenes/level_components/bounce_platform.tres" and \
+			pre_slide_velocity_y > 35:
+			 # The bounce logic is only applied on the frame of impact
+			print("Boing!")
+			boing_effect.pitch_scale = lerp(0.8, 1.5, 1 - clamp(abs(pre_slide_velocity_y) / 1000, 0, 1))
+			boing_effect.play()  
+			var bounce_strength = (collision.get_collider() as AnimatableBody2D).physics_material_override.bounce
+			print(bounce_strength)
+			print(pre_slide_velocity_y)
+			# Use a more reliable bounce formula to ensure upward velocity
+			# The bounce should be proportional to the incoming velocity
+			velocity.y = -abs(pre_slide_velocity_y) * bounce_strength
+			apply_floor_snap()
+			fall_timer.stop()
+			left_dash_lock = false
+			right_dash_lock = false
+			# Use `break` to exit the loop after the first bounce is detected
+			break
+		else:
+			thump_effect.play()
+
+		
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("float") && !float_lock && not is_on_floor():
@@ -177,7 +195,7 @@ func draw_hp() -> void:
 			(hp.texture as AtlasTexture).region = Rect2(16,0,16,16)
 			
 func draw_collectables() -> void:
-	golden_count.text = str(DataHandler.goldens_collected)
+	golden_count.text = str(DataHandler.goldens_collected) + "/4"
 	secret_count.text = str(DataHandler.secrets_collected)
 	
 func slerp_effect_play() -> void:

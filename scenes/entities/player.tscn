@@ -37,6 +37,21 @@ region = Rect2(0, 0, 16, 16)
 atlas = ExtResource("3_b6tgf")
 region = Rect2(16, 0, 16, 16)
 
+[sub_resource type="Animation" id="Animation_73kkf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(16, 0, 16, 16)]
+}
+
 [sub_resource type="Animation" id="Animation_b6tgf"]
 resource_name = "secret"
 length = 1.5
@@ -53,21 +68,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [Rect2(16, 0, 16, 16), Rect2(32, 0, 16, 16), Rect2(48, 0, 16, 16)]
-}
-
-[sub_resource type="Animation" id="Animation_73kkf"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(16, 0, 16, 16)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_73kkf"]
@@ -208,7 +208,7 @@ layout_mode = 2
 text = "0"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(6, 16, -6, 16, -20, -16, 14, -16)
+polygon = PackedVector2Array(6, 16, -6, 16, -18, -11, -14.113251, -16, 9, -16)
 
 [node name="CharacterModel" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("3_1ie0h")

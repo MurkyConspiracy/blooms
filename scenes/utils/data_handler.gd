@@ -20,6 +20,8 @@ func damage_player(damage_amount : int = 1, force_death : bool = false) -> bool:
 		return false
 	elif force_death || player_health < 0:
 		player_health = 4
+		secrets_collected = 0
+		goldens_collected = 0
 		reset_input_mapping()
 		get_tree().reload_current_scene()
 		return true

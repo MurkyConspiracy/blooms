@@ -293,6 +293,6 @@ autoplay = "move_plat"
 
 [node name="SpawnPoint" parent="." instance=ExtResource("5_d7lei")]
 unique_name_in_owner = true
-position = Vector2(559, 793)
+position = Vector2(964, 393)
 
 [editable path="SpawnPoint"]
